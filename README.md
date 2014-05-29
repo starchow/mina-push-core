@@ -1,28 +1,28 @@
-mina-sidekiq
+mina-push-core
 ============
 
-[![Build Status](https://travis-ci.org/Mic92/mina-sidekiq.png?branch=master)](https://travis-ci.org/Mic92/mina-sidekiq)
-
-mina-sidekiq is a gem that adds tasks to aid in the deployment of [Sidekiq] (http://mperham.github.com/sidekiq/)
+mina-push-core is a gem that adds tasks to aid in the deployment of [Push-Core] (http://github.com/tompesman/push-core)
 using [Mina] (http://nadarei.co/mina).
+This gem was created base on [mina-sidekiq] (http://github.com/Mic92/mina-sidekiq)!
+
 
 # Getting Start
 
 ## Installation
 
-    gem install mina-sidekiq
+    gem install mina-push-core
 
 ## Example
 
 ## Usage example
 
-    require 'mina_sidekiq/tasks'
+    require 'mina_push_core/tasks'
     ...
     # to make logs persistent between deploys
     set :shared_paths, ['log']
 
     task :setup do
-      # sidekiq needs a place to store its pid file and log file
+      # push core needs a place to store its pid file and log file
       queue! %[mkdir -p "#{deploy_to}/shared/pids/"]
       queue! %[mkdir -p "#{deploy_to}/shared/log/"]
     end
@@ -30,35 +30,31 @@ using [Mina] (http://nadarei.co/mina).
     task :deploy do
       deploy do
         # stop accepting new workers
-        invoke :'sidekiq:quiet'
         invoke :'git:clone'
         invoke :'deploy:link_shared_paths'
         ...
 
         to :launch do
           ...
-          invoke :'sidekiq:restart'
+          invoke :'push_core:restart'
         end
       end
     end
 
 ## Available Tasks
 
-* sidekiq:stop
-* sidekiq:start
+* push_core:stop
+* push_core:start
 * sidekiq:restart
-* sidekiq:quiet
 
 ## Available Options
 
 | Option              | Description                                                                    |
 | ------------------- | ------------------------------------------------------------------------------ |
-| *sidekiq*           | Sets the path to sidekiq.                                                      |
-| *sidekiqctl*        | Sets the path to sidekiqctl.                                                   |
-| *sidekiq\_timeout*  | Sets a upper limit of time a worker is allowed to finish, before it is killed. |
-| *sidekiq\_log*      | Sets the path to the log file of sidekiq.                                      |
-| *sidekiq\_pid*      | Sets the path to the pid file of a sidekiq worker.                             |
-| *sidekiq_processes* | Sets the number of sidekiq processes launched.                                 |
+| *push_core*           | Sets the path to push_core.                                                      |
+| *push_core\_log*      | Sets the path to the log file of push_core.                                      |
+| *push_core\_pid*      | Sets the path to the pid file of a push_core worker.                             |
+| *push_core_processes* | Sets the number of push_core processes launched.                                 |
 
 ## Testing
 
@@ -77,6 +73,6 @@ For faster release cycle use
 
 ## Copyright
 
-Copyright (c) 2013 Jörg Thalheim http://higgsboson.tk/joerg
+Copyright (c) 2013 Star Chow http://phamtrungnam.info
 
 See LICENSE for further details.
