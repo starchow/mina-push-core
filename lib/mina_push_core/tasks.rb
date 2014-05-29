@@ -38,18 +38,18 @@ set_default :push_core, lambda { "#{bundle_bin} exec push" }
 # To disable logging set it to "/dev/null"
 set_default :push_core_log, lambda { "#{deploy_to}/#{current_path}/log/push_core.log" }
 
-# ### sidekiq_pid
-# Sets the path to the pid file of a sidekiq worker
+# ### push_core_pid
+# Sets the path to the pid file of a push_core worker
 set_default :push_core_pid, lambda { "#{deploy_to}/#{shared_path}/pids/push_core.pid" }
 
-# ### sidekiq_processes
-# Sets the number of sidekiq processes launched
+# ### push_core_processes
+# Sets the number of push_core processes launched
 set_default :push_core_processes, 1
 
 # ## Control Tasks
 namespace :push_core do
   def for_each_process(&block)
-    sidekiq_processes.times do |idx|
+    push_core_processes.times do |idx|
       pid_file = if idx == 0
                    push_core_pid
                  else
@@ -78,7 +78,7 @@ namespace :push_core do
   # ### push_core:start
   desc "Start push_core"
   task :start => :environment do
-    queue %[echo "-----> Start sidekiq"]
+    queue %[echo "-----> Start push_core"]
     for_each_process do |pid_file, idx|
       queue %{
         cd "#{deploy_to}/#{current_path}"

@@ -24,5 +24,5 @@ Gem::Specification.new do |s|
   in your deploy.rb to load the library
   MESSAGE
 
-  s.add_runtime_dependency "mina"
+  s.add_runtime_dependency "mina", '~> 0'
 end
