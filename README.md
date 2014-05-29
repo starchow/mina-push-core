@@ -45,7 +45,7 @@ This gem was created base on [mina-sidekiq] (http://github.com/Mic92/mina-sideki
 
 * push_core:stop
 * push_core:start
-* sidekiq:restart
+* push_core:restart
 
 ## Available Options
 
